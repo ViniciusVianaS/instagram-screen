@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { 
   StyleSheet, 
   Text, 
@@ -8,16 +7,25 @@ import {
   TouchableOpacity,
   Platform
 } from 'react-native';
-
-import { FontAwesome5 } from '@expo/vector-icons';
+import {useState} from 'react';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 export default function App() {
+  const [input, setInput] = useState('');
+  const [hidePass, setHidePass] = useState(true);
+
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#fff' translucent={false} />
       <Image source={require('./src/assets/logo.png')} style={styles.logo}/>
       <TextInput placeholder='Celular, usuário ou email' style={styles.input}/>
-      <TextInput placeholder='Sua senha' style={styles.input}/>
+
+      <View style={styles.inputArea}>
+        <TextInput placeholder="insira sua senha" style={styles.inputPassword} value={input} onChangeText={(texto) => setInput(texto)} secureTextEntry={hidePass}/>
+        <TouchableOpacity style={styles.icon} onPress={() => setHidePass(!hidePass)}>
+          <Ionicons name="eye" color="#000" size={25} />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.forgotContainer}>
         <TouchableOpacity>
           <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
@@ -41,6 +49,7 @@ export default function App() {
           <Text style={styles.signUpButton}>Cadastre-se</Text>
         </TouchableOpacity>
       </View>
+
     </View>
   );
 }
@@ -61,12 +70,31 @@ const styles = StyleSheet.create({
   input: {
     width: '90%',
     height: 42,
-    backgroundColor: '#f4f3f3',
     marginBottom: 20,
     padding: 8,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'e0e0e0',
+  },
+  inputArea: {
+    flexDirection: 'row',
+    width: '90%',
+    borderRadius: 5,
+    height: 42,
+    alignItems: 'center',
+    marginBottom: 20,
+    padding: 8,
+    borderWidth: 1,
+  },
+  inputPassword: {
+    width: '90%',
+    height: 42,
+  },
+  icon: {
+    width: '15%',
+    height: 42,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   forgotContainer: {
     width: '90%',
